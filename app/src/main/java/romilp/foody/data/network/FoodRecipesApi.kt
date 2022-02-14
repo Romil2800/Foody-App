@@ -1,4 +1,4 @@
-package romilp.foody
+package romilp.foody.data.network
 
 import retrofit2.Response
 import retrofit2.http.GET

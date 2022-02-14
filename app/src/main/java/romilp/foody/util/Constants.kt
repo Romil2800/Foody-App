@@ -1,4 +1,4 @@
-package romilp.foody
+package romilp.foody.util
 
 class Constants {
 
