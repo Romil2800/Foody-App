@@ -27,8 +27,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility "1.8"
+        targetCompatibility "1.8"
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -62,6 +62,7 @@ dependencies {
     // Room components
     implementation "androidx.room:room-runtime:2.4.1"
     kapt "androidx.room:room-compiler:2.4.1"
+    annotationProcessor "androidx.room:room-compiler:2.4.1"
     implementation "androidx.room:room-ktx:2.4.1"
     androidTestImplementation "androidx.room:room-testing:2.4.1"
 
@@ -80,11 +81,15 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     //Dagger - Hilt
-    implementation "com.google.dagger:hilt-android:2.31-alpha"
-    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
 
+    implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0'
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
     kapt "androidx.hilt:hilt-compiler:1.0.0"
+
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.31-alpha'
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.31-alpha'
 
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'

@@ -3,8 +3,8 @@ package romilp.foody.di
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import romilp.foody.util.Constants.Companion.BASE_URL
@@ -14,9 +14,11 @@ import javax.inject.Singleton
 
 
 @Module
-@InstallIn(ApplicationContext::class)
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    @Singleton
+    @Provides
     fun provideHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(15, TimeUnit.SECONDS)

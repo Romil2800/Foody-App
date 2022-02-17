@@ -1,4 +1,4 @@
-package romilp.foody
+package romilp.foody.viewModels
 
 import android.app.Application
 import android.content.Context
@@ -8,17 +8,19 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import romilp.foody.data.Repository
 import romilp.foody.model.FoodRecipe
 import romilp.foody.util.NetworkResult
+import javax.inject.Inject
 
-class MainViewModel @ViewModelInject constructor(
-    private val repository: Repository, application: MyApplication
-) :
-    AndroidViewModel(application) {
-
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val repository: Repository,
+    application: Application
+) : AndroidViewModel(application) {
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
 
     fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
@@ -73,4 +75,5 @@ class MainViewModel @ViewModelInject constructor(
             else -> false
         }
     }
+
 }
