@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+<variable
+    name="mainViewModel"
+    type="romilp.foody.viewModels.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -58,14 +60,16 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:alpha="0.5"
+            readApiResponse="@{mainViewModel.recipesResponse}"
+            readDatabase="@{mainViewModel.readRecipes}"
+            android:contentDescription="TODO"
             android:src="@drawable/ic_sad"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.37"
-            android:contentDescription="TODO" />
+            app:layout_constraintVertical_bias="0.37" />
 
         <TextView
             android:id="@+id/error_textView"
@@ -73,6 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:alpha="0.5"
+            readApiResponse2="@{mainViewModel.recipesResponse}"
+            readDatabase2="@{mainViewModel.readRecipes}"
             android:text="@string/no_internet_connection"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -92,8 +98,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/recipes_row_layout" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--        tools:listitem="@layout/recipes_row_layout"-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
