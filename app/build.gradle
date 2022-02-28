@@ -71,7 +71,7 @@ dependencies {
     kapt "androidx.databinding:databinding-common:7.1.1"
 
     // DataStore
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha05"
 
     // Recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.2.1'

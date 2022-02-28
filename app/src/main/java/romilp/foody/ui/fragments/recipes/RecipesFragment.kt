@@ -9,23 +9,29 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import romilp.foody.viewModels.MainViewModel
 import romilp.foody.R
 import romilp.foody.adapters.RecipesAdapter
 import romilp.foody.databinding.FragmentRecipesBinding
+import romilp.foody.util.NetworkListener
 import romilp.foody.util.NetworkResult
 import romilp.foody.util.observeOnce
 import romilp.foody.viewModels.RecipesViewModel
 import kotlin.math.log
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
+    private val args by navArgs<RecipesFragmentArgs>()
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
     private val mAdapter by lazy { RecipesAdapter() }
@@ -33,6 +39,8 @@ class RecipesFragment : Fragment() {
     private lateinit var recipesViewModel: RecipesViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var shimmerFrameLayout: ShimmerFrameLayout
+
+    private lateinit var networkListener: NetworkListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +61,29 @@ class RecipesFragment : Fragment() {
         recyclerView = _binding!!.recyclerview
         shimmerFrameLayout = _binding!!.shimmerLayout
 
-        readDatabase()
         setUpRecyclerView()
+
+        recipesViewModel.readBackOnline.observe(viewLifecycleOwner) {
+            recipesViewModel.backOnline = it
+        }
+
+        lifecycleScope.launch {
+            networkListener = NetworkListener()
+            networkListener.checkNetworkAvailability(requireContext()).collect { status ->
+                Log.d("NetworkListener", status.toString())
+                recipesViewModel.networkStatus = status
+                recipesViewModel.showNetworkStatus()
+                readDatabase()
+            }
+        }
+        binding.recipesFab.setOnClickListener {
+            if (recipesViewModel.networkStatus) {
+                findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            } else {
+                recipesViewModel.showNetworkStatus()
+            }
+        }
+
 
         return binding.root
     }
@@ -69,7 +98,7 @@ class RecipesFragment : Fragment() {
     private fun readDatabase() {
         lifecycleScope.launch {
             mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { database ->
-                if (database.isNotEmpty()) {
+                if (database.isNotEmpty() && !args.backFromBottomSheet) {
                     Log.d("RecipesFragment", "readDatabase called!")
                     mAdapter.setData(database[0].foodRecipe)
                     hideShimmerEffect()

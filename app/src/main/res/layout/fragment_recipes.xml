@@ -42,7 +42,7 @@
         </com.facebook.shimmer.ShimmerFrameLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/recipes_fab"
             android:layout_width="wrap_content"
             android:layout_height="648dp"
             android:layout_marginEnd="24dp"
@@ -53,7 +53,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:tint="@color/white"
-            android:contentDescription="TODO" />
+            android:contentDescription="@string/todo" />
 
         <ImageView
             android:id="@+id/error_imageView"
@@ -62,7 +62,7 @@
             android:alpha="0.5"
             readApiResponse="@{mainViewModel.recipesResponse}"
             readDatabase="@{mainViewModel.readRecipes}"
-            android:contentDescription="TODO"
+            android:contentDescription="@string/todo"
             android:src="@drawable/ic_sad"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
