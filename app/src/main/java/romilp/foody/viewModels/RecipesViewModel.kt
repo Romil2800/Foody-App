@@ -7,11 +7,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import romilp.foody.data.DataStoreRepository
-import romilp.foody.data.MealAndDietType
-import romilp.foody.util.Constants
 import romilp.foody.util.Constants.Companion.API_KEY
 import romilp.foody.util.Constants.Companion.DEFAULT_DIET_TYPE
 import romilp.foody.util.Constants.Companion.DEFAULT_MEAL_TYPE
@@ -37,7 +34,7 @@ class RecipesViewModel @Inject constructor(
     var networkStatus = false
     var backOnline = false
 
-    val readMealAndDietType = dataStoreRepository.realMealAndDietType
+    val readMealAndDietType = dataStoreRepository.readMealAndDietType
     val readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
 
     fun saveMealAndDietType(mealType: String, mealTypeId: Int, dietType: String, dietTypeId: Int) =
