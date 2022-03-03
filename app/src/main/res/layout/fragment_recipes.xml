@@ -29,13 +29,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <include layout="@layout/placeholder_row_layout" />
 
-                <include layout="@layout/placeholder_row_layout" />
-
-                <include layout="@layout/placeholder_row_layout" />
-
-                <include layout="@layout/placeholder_row_layout" />
 
             </LinearLayout>
 

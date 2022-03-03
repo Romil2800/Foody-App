@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Foody">
+        android:theme="@style/Theme.Foody"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.DetailsActivity"
             android:label="Details"
