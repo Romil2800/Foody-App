@@ -11,6 +11,7 @@ import org.jsoup.Jsoup
 import romilp.foody.R
 import romilp.foody.databinding.FragmentOverviewBinding
 import romilp.foody.model.Result
+import romilp.foody.util.Constants.Companion.RECIPE_RESULT_KEY
 
 class OverviewFragment : Fragment() {
 
@@ -22,7 +23,7 @@ class OverviewFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentOverviewBinding.inflate(inflater, container, false)
         val args = arguments
-        val myBundle: Result? = args!!.getParcelable("recipeBundle")
+        val myBundle: Result? = args!!.getParcelable(RECIPE_RESULT_KEY)
 
         binding.mainImageView.load(myBundle!!.image)
         binding.titleTextView.text = myBundle.title
