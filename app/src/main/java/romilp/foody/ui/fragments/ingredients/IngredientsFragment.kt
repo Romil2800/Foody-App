@@ -37,5 +37,4 @@ class IngredientsFragment : Fragment() {
         binding.ingredientsRecyclerview.adapter = mAdapter
         binding.ingredientsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
     }
-
 }

@@ -40,7 +40,7 @@ class IngredientsAdapter : RecyclerView.Adapter<IngredientsAdapter.MyViewHolder>
             error(R.drawable.ic_error_placeholder)
         }
         holder.ingredientName.text =
-            ingredientsList[position].name.capitalize(Locale.ROOT)
+            ingredientsList[position].name?.capitalize(Locale.ROOT)
         holder.ingredientAmount.text = ingredientsList[position].amount.toString()
         holder.ingredientUnit.text = ingredientsList[position].unit
         holder.ingredientConsistency.text = ingredientsList[position].consistency
