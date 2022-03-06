@@ -7,11 +7,12 @@
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/drawable/ic_checkmark.xml" value="0.2285" />
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/drawable/ic_error_placeholder.xml" value="0.1845" />
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/drawable/ic_menu_book.xml" value="0.232" />
+        <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/drawable/ic_splash_screen_light.xml" value="0.25" />
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/layout/activity_details.xml" value="0.24270833333333333" />
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/layout/favorite_recipe_row_layout.xml" value="0.1" />
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/layout/fragment_favorite_recipes.xml" value="0.1" />
-        <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/layout/fragment_food_joke.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/layout/fragment_food_joke.xml" value="0.1" />
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/layout/fragment_ingredients.xml" value="0.22" />
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/layout/fragment_instructions.xml" value="0.24270833333333333" />
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/layout/fragment_overview.xml" value="0.24270833333333333" />
@@ -25,6 +26,7 @@
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/menu/details_menu.xml" value="0.24270833333333333" />
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/menu/favorite_recipes_menu.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/menu/favorites_contextual_menu.xml" value="0.20104166666666667" />
+        <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/menu/food_joke_menu.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/patel/AndroidStudioProjects/Foody/app/src/main/res/menu/recipes_menu.xml" value="0.24270833333333333" />
       </map>
     </option>
