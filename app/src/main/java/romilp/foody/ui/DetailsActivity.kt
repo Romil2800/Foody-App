@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.navArgs
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import romilp.foody.R
 import romilp.foody.adapters.PagerAdapter
@@ -32,6 +33,8 @@ class DetailsActivity : AppCompatActivity() {
 
     private var recipeSaved = false
     private var savedRecipeId = 0
+
+    private lateinit var menuItem: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,22 +58,26 @@ class DetailsActivity : AppCompatActivity() {
         resultBundle.putParcelable(RECIPE_RESULT_KEY, args.result)
 
 
-        val adapter = PagerAdapter(
+        val pagerAdapter = PagerAdapter(
             resultBundle,
             fragments,
-            titles,
-            supportFragmentManager
+            this
         )
 
-        binding.viewPager.adapter = adapter
-        binding.tabLayout.setupWithViewPager(binding.viewPager)
+        binding.viewPager2.isUserInputEnabled = false
+        binding.viewPager2.apply {
+            adapter = pagerAdapter
+        }
 
+        TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
+            tab.text = titles[position]
+        }.attach()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.details_menu, menu)
-        val menuItem = menu?.findItem(R.id.save_to_favorites_menu)
-        checkSavedRecipes(menuItem!!)
+        menuItem = menu!!.findItem(R.id.save_to_favorites_menu)
+        checkSavedRecipes(menuItem)
         return true
     }
 
@@ -93,8 +100,6 @@ class DetailsActivity : AppCompatActivity() {
                         changeMenuItemColor(menuItem, R.color.yellow)
                         savedRecipeId = savedRecipe.id
                         recipeSaved = true
-                    } else {
-                        changeMenuItemColor(menuItem, R.color.white)
                     }
                 }
             } catch (e: Exception) {
@@ -127,5 +132,10 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun changeMenuItemColor(item: MenuItem, color: Int) {
         item.icon.setTint(ContextCompat.getColor(this, color))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        changeMenuItemColor(menuItem, R.color.white)
     }
 }

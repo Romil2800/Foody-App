@@ -11,8 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -24,7 +22,6 @@ import romilp.foody.util.NetworkListener
 import romilp.foody.util.NetworkResult
 import romilp.foody.util.observeOnce
 import romilp.foody.viewModels.RecipesViewModel
-import kotlin.math.log
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -36,8 +33,6 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
     private val mAdapter by lazy { RecipesAdapter() }
     private lateinit var mainViewModel: MainViewModel
     private lateinit var recipesViewModel: RecipesViewModel
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var shimmerFrameLayout: ShimmerFrameLayout
 
     private lateinit var networkListener: NetworkListener
 
@@ -59,8 +54,6 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
 
         setHasOptionsMenu(true)
 
-        recyclerView = _binding!!.recyclerview
-        shimmerFrameLayout = _binding!!.shimmerLayout
 
         setUpRecyclerView()
 
@@ -68,7 +61,7 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
             recipesViewModel.backOnline = it
         }
 
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenStarted {
             networkListener = NetworkListener()
             networkListener.checkNetworkAvailability(requireContext()).collect { status ->
                 Log.d("NetworkListener", status.toString())
@@ -91,8 +84,8 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun setUpRecyclerView() {
 
-        recyclerView.adapter = mAdapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerview.adapter = mAdapter
+        binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
         showShimmerEffect()
     }
 
@@ -138,9 +131,11 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
                     hideShimmerEffect()
                     loadDataFromCache()
                     response.data?.let { mAdapter.setData(it) }
+                    recipesViewModel.saveMealAndDietType()
                 }
                 is NetworkResult.Error -> {
                     hideShimmerEffect()
+                    loadDataFromCache()
                     Toast.makeText(
                         requireContext(),
                         response.message.toString(),
@@ -190,15 +185,18 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun showShimmerEffect() {
-        shimmerFrameLayout.showShimmer(true)
+        binding.shimmerLayout.startShimmer()
+        binding.recyclerview.visibility = View.GONE
     }
 
     private fun hideShimmerEffect() {
-        shimmerFrameLayout.hideShimmer()
+        binding.shimmerLayout.stopShimmer()
+        binding.shimmerLayout.visibility = View.GONE
+        binding.recyclerview.visibility = View.VISIBLE
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 }

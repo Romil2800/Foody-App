@@ -29,7 +29,7 @@ class FavoriteRecipesAdapter(
     private var myViewHolders = arrayListOf<MyViewHolder>()
     private var favoriteRecipes = emptyList<FavoritesEntity>()
 
-    class MyViewHolder(private val binding: FavoriteRecipeRowLayoutBinding) :
+    class MyViewHolder(val binding: FavoriteRecipeRowLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(favoritesEntity: FavoritesEntity) {
@@ -58,11 +58,13 @@ class FavoriteRecipesAdapter(
         val currentRecipe = favoriteRecipes[position]
         holder.bind(currentRecipe)
 
+        saveItemStateOnScroll(currentRecipe, holder)
+
         /**
          * Single Click Listener
          * */
 
-        holder.itemView.findViewById<View>(R.id.favoriteRecipesRowLayout).setOnClickListener {
+        holder.binding.favoriteRecipesRowLayout.setOnClickListener {
             if (multiSelection) {
                 applySelection(holder, currentRecipe)
             } else {
@@ -77,21 +79,29 @@ class FavoriteRecipesAdapter(
         /**
          * Long Click Listener
          */
-        holder.itemView.findViewById<View>(R.id.favoriteRecipesRowLayout).setOnLongClickListener {
+        holder.binding.favoriteRecipesRowLayout.setOnLongClickListener {
             if (!multiSelection) {
                 multiSelection = true
                 requireActivity.startActionMode(this)
                 applySelection(holder, currentRecipe)
                 true
             } else {
-                multiSelection = false
-                false
+                applySelection(holder, currentRecipe)
+                true
             }
         }
     }
 
     override fun getItemCount(): Int {
         return favoriteRecipes.size
+    }
+
+    private fun saveItemStateOnScroll(currentRecipe: FavoritesEntity, holder: MyViewHolder) {
+        if (selectedRecipes.contains(currentRecipe)) {
+            changeRecipeStyle(holder, R.color.cardBackgroundLightColor, R.color.colorPrimary)
+        } else {
+            changeRecipeStyle(holder, R.color.cardBackgroundColor, R.color.strokeColor)
+        }
     }
 
     private fun applySelection(holder: MyViewHolder, currentRecipe: FavoritesEntity) {
@@ -107,16 +117,19 @@ class FavoriteRecipesAdapter(
     }
 
     private fun changeRecipeStyle(holder: MyViewHolder, backgroundColor: Int, strokeColor: Int) {
-        holder.itemView.findViewById<View>(R.id.favoriteRecipesRowLayout).setBackgroundColor(
+        holder.binding.favoriteRecipesRowLayout.setBackgroundColor(
             ContextCompat.getColor(requireActivity, backgroundColor)
         )
-        holder.itemView.findViewById<MaterialCardView>(R.id.favoriteRowCardView).strokeColor =
+        holder.binding.favoriteRowCardView.strokeColor =
             ContextCompat.getColor(requireActivity, strokeColor)
     }
 
     private fun applyActionModeTitle() {
         when (selectedRecipes.size) {
-            0 -> mActionMode.finish()
+            0 -> {
+                mActionMode.finish()
+                multiSelection = false
+            }
             1 -> mActionMode.title = "${selectedRecipes.size} item Selected"
             else -> mActionMode.title = "${selectedRecipes.size} items selected"
         }
