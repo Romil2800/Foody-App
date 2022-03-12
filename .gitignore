@@ -1,6 +1,5 @@
 *.iml
 .gradle
-/app/src/main/java/romilp/foody/util/ApiKey.kt
 /local.properties
 /.idea/caches
 /.idea/libraries
