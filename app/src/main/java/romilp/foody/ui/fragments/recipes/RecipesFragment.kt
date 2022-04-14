@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,14 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
-import romilp.foody.viewModels.MainViewModel
 import romilp.foody.R
 import romilp.foody.adapters.RecipesAdapter
 import romilp.foody.databinding.FragmentRecipesBinding
 import romilp.foody.util.NetworkListener
 import romilp.foody.util.NetworkResult
 import romilp.foody.util.observeOnce
+import romilp.foody.viewModels.MainViewModel
 import romilp.foody.viewModels.RecipesViewModel
+
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
