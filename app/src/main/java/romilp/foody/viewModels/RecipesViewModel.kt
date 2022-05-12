@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 import romilp.foody.data.DataStoreRepository
 import romilp.foody.data.MealAndDietType
 import romilp.foody.util.Constants.Companion.API_KEY
+import romilp.foody.util.Constants.Companion.DEFAULT_DIET_TYPE
+import romilp.foody.util.Constants.Companion.DEFAULT_MEAL_TYPE
 import romilp.foody.util.Constants.Companion.DEFAULT_RECIPES_NUMBER
 import romilp.foody.util.Constants.Companion.QUERY_ADD_RECIPE_INFORMATION
 import romilp.foody.util.Constants.Companion.QUERY_API_KEY
@@ -37,12 +39,14 @@ class RecipesViewModel @Inject constructor(
 
     fun saveMealAndDietType() =
         viewModelScope.launch(Dispatchers.IO) {
-            dataStoreRepository.saveMealAndDietType(
-                mealAndDiet.selectedMealType,
-                mealAndDiet.selectedMealTypeId,
-                mealAndDiet.selectedDietType,
-                mealAndDiet.selectedDietTypeId
-            )
+            if (this@RecipesViewModel::mealAndDiet.isInitialized) {
+                dataStoreRepository.saveMealAndDietType(
+                    mealAndDiet.selectedMealType,
+                    mealAndDiet.selectedMealTypeId,
+                    mealAndDiet.selectedDietType,
+                    mealAndDiet.selectedDietTypeId
+                )
+            }
         }
 
     fun saveMealAndDietTypeTemp(
@@ -67,11 +71,16 @@ class RecipesViewModel @Inject constructor(
 
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
         queries[QUERY_API_KEY] = API_KEY
-        queries[QUERY_TYPE] = mealAndDiet.selectedMealType
-        queries[QUERY_DIET] = mealAndDiet.selectedDietType
         queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
         queries[QUERY_FILL_INGREDIENTS] = "true"
 
+        if (this@RecipesViewModel::mealAndDiet.isInitialized) {
+            queries[QUERY_TYPE] = mealAndDiet.selectedMealType
+            queries[QUERY_DIET] = mealAndDiet.selectedDietType
+        } else {
+            queries[QUERY_TYPE] = DEFAULT_MEAL_TYPE
+            queries[QUERY_DIET] = DEFAULT_DIET_TYPE
+        }
 
         return queries
     }
